@@ -1,0 +1,31 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	margin: 0;
+	background-color: #999;
+}
+
+.page {
+	background-color: white;
+	width: 85%;
+	margin-inline: auto;
+	padding: 1.5rem 1.5rem;
+	height: 90vh;
+
+}
+
+h1 {
+	margin: 0;
+}
+
+p {
+	margin: 0;
+	margin-bottom: 10px;
+	width: 50%;
+}
