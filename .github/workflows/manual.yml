@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Run Cron
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -30,39 +30,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Test
-        run: echo ${{ env.APP_VAR }}
-      - name: Set FOO
-        run: echo "FOO=${{ github.event.inputs.foo }}" >> $GITHUB_ENV
-      - name: Test
-        run: echo $FOO
      # - run: |
        # FOO="${{ github.event.inputs.foo }}"
        # echo "FOO=${FOO}" >> $GITHUB_ENV
-      - run: |
-          echo "test repo variable: $APP_VAR"
-          echo "test repo secret: $APP_DEMO"
-          echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
-        env:
-          APP_VAR: ${{ env.APP_VAR }}
-          LEVEL: ${{ inputs.logLevel }}
-          TAGS: ${{ inputs.tags }}
-          ENVIRONMENT: ${{ inputs.environment }}
-    
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
       - name: Check out repository code
         uses: actions/checkout@v4
+        
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+
       - name: Run a script
         run: |
           pwd
+          echo "${{ github.ref }}"
+          echo "${{ github.repository }}"
+          echo "${{ github.event_name }}"
+          ls ${{ github.workspace }}
           chmod +x ./test.sh
           stat ./test.sh
           ./test.sh
@@ -71,24 +55,18 @@ jobs:
           # touch README.md
           echo "-- last run $(date +%Y%m%d_%H%M%S)"  >> ./README.md
         shell: bash
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+        
       - name: Commit files
         run: |
           git config --local user.name ${{ github.actor }}
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git add .
           git commit -m "updating the repo automatically"
+          
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
+          
       - run: echo "🍏 This job's status is ${{ job.status }}."
-        env:
-          APP_DEMO: ${{ secrets.APP_DEMO }}
-          APP_VAR: ${{ env.APP_VAR }}
-          FIRST_NAME: Akhil
-          LAST_NAME: Pentamsetti
-      #run: echo "Hello ${{ inputs.name }}"
