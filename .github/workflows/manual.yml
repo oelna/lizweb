@@ -16,6 +16,9 @@ jobs:
   post1:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -33,8 +36,12 @@ jobs:
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: Run a script
+        run: ./test.sh
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
