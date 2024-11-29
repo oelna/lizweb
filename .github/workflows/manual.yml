@@ -42,7 +42,9 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run a script
         run: |
-          cd ${{ github.workspace }}
+          # cd ${{ github.workspace }}
+          pwd
+          chmod +x ./test.sh
           stat ./test.sh
           ./test.sh
       - name: List files in the repository
