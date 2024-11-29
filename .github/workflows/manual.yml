@@ -1,9 +1,5 @@
-# This is a basic workflow that is manually triggered
-
 name: Run Cron
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
   # push:
@@ -12,25 +8,19 @@ on:
     # - cron: '30 5 * * 2,4'
 
 env:
-  APP_VAR: ${{ vars.APP_VAR }}
-  APP_DEMO: ${{ secrets.APP_DEMO }}
   BLUESKY_USERNAME: ${{ vars.BLUESKY_USERNAME }}
   BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
 
 permissions: # Global permissions configuration starts here
   contents: write
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  post1:
-    # The type of runner that the job will run on
+  bluesky:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
      # - run: |
        # FOO="${{ github.event.inputs.foo }}"
@@ -39,9 +29,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
         
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
       - name: Run a script
         run: |
           pwd
@@ -54,8 +41,7 @@ jobs:
           ./test.sh
           which php
           php ./cron.php
-          # touch README.md
-          echo "-- last run $(date +%Y%m%d_%H%M%S)"  >> ./README.md
+          # echo "-- last run $(date +%Y%m%d_%H%M%S)"  >> ./README.md
         shell: bash
         
       - name: Commit files
@@ -63,7 +49,7 @@ jobs:
           git config --local user.name ${{ github.actor }}
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git add .
-          git commit -m "updating the repo automatically"
+          git commit -m "updating the repo log"
           
       - name: Push changes
         uses: ad-m/github-push-action@master
@@ -71,4 +57,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
           
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "This job's status is ${{ job.status }}."
