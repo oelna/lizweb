@@ -6,6 +6,7 @@ name: Manual workflow
 # or API.
 on:
   workflow_dispatch:
+  push:
   schedule:
     - cron: "15 8,17 * * *"
     # - cron: '30 5 * * 2,4'
@@ -22,6 +23,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Test
+        run: echo ${{ env.APP_VAR }}
       - run: |
           echo "test repo variable: $APP_VAR"
           echo "Log level: $LEVEL"
@@ -50,6 +53,7 @@ jobs:
           ./test.sh
           which php
           php ./cron.php
+        shell: bash
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
