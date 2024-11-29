@@ -23,10 +23,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - run: |
+          echo "test repo variable: $APP_VAR"
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "Environment: $ENVIRONMENT"
         env:
+          APP_VAR: ${{ env.APP_VAR }}
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
           ENVIRONMENT: ${{ inputs.environment }}
@@ -42,11 +44,11 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Run a script
         run: |
-          # cd ${{ github.workspace }}
           pwd
           chmod +x ./test.sh
           stat ./test.sh
           ./test.sh
+          which php
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
