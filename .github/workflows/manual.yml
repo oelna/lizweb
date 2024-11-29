@@ -13,7 +13,7 @@ on:
 
 env:
   APP_VAR: ${{ vars.APP_VAR }}
-  APP_DEMO: bbb9999
+  APP_DEMO: ${{ secrets.APP_DEMO }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -38,6 +38,7 @@ jobs:
        # echo "FOO=${FOO}" >> $GITHUB_ENV
       - run: |
           echo "test repo variable: $APP_VAR"
+          echo "test repo secret: $APP_DEMO"
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "Environment: $ENVIRONMENT"
