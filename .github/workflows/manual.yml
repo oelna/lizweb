@@ -39,9 +39,9 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      env:
-        APP_DEMO: ${{ secrets.APP_DEMO }}
-        APP_VAR: ${{ variables.APP_VAR }}
-        FIRST_NAME: Akhil
-        LAST_NAME: Pentamsetti
+        env:
+          APP_DEMO: ${{ secrets.APP_DEMO }}
+          APP_VAR: ${{ variables.APP_VAR }}
+          FIRST_NAME: Akhil
+          LAST_NAME: Pentamsetti
       #run: echo "Hello ${{ inputs.name }}"
