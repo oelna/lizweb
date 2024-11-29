@@ -11,6 +11,10 @@ on:
     - cron: "15 8,17 * * *"
     # - cron: '30 5 * * 2,4'
 
+env:
+  APP_VAR: ${{ vars.APP_VAR }}
+  APP_DEMO: bbb9999
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
@@ -25,6 +29,13 @@ jobs:
     steps:
       - name: Test
         run: echo ${{ env.APP_VAR }}
+      - name: Set FOO
+        run: echo "FOO=${{ github.event.inputs.foo }}" >> $GITHUB_ENV
+      - name: Test
+        run: echo $FOO
+     # - run: |
+       # FOO="${{ github.event.inputs.foo }}"
+       # echo "FOO=${FOO}" >> $GITHUB_ENV
       - run: |
           echo "test repo variable: $APP_VAR"
           echo "Log level: $LEVEL"
