@@ -14,7 +14,7 @@ on:
 env:
   APP_VAR: ${{ vars.APP_VAR }}
   APP_DEMO: ${{ secrets.APP_DEMO }}
-  BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
+  BLUESKY_USERNAME: ${{ vars.BLUESKY_USERNAME }}
   BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
 
 permissions: # Global permissions configuration starts here
