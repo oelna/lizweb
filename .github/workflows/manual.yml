@@ -49,6 +49,7 @@ jobs:
           stat ./test.sh
           ./test.sh
           which php
+          php ./cron.php
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
