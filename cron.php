@@ -1,7 +1,9 @@
 <?php
 
-$root = getenv("HOME");
-echo('Hello World from PHP cron, '.$root);
+$root = dirname(getenv("HOME"));
+echo('Hello World from PHP cron'."\n");
+echo('ROOT: '.$root."\n");
+echo('__DIR__: '.__DIR__."\n");
 
 $config['bluesky-username'] = getenv("BLUESKY_USERNAME");
 $config['bluesky-password'] = getenv("BLUESKY_APP_PASSWORD");
@@ -66,4 +68,4 @@ curl_close($curl);
 
 var_dump($response);
 
-$log = file_put_contents(__DIR__.'cron-log.txt', date('Y-m-d H:i:s').PHP_EOL , FILE_APPEND | LOCK_EX);
+$log = file_put_contents(__DIR__.'/cron-log.txt', date('Y-m-d H:i:s').PHP_EOL , FILE_APPEND | LOCK_EX);
