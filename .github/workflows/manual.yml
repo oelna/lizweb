@@ -6,7 +6,7 @@ name: Manual workflow
 # or API.
 on:
   workflow_dispatch:
-  push:
+  # push:
   schedule:
     - cron: "15 8,17 * * *"
     # - cron: '30 5 * * 2,4'
@@ -65,10 +65,23 @@ jobs:
           ./test.sh
           which php
           php ./cron.php
+          # touch README.md
+          echo "-- last run $(date +%Y%m%d_%H%M%S)"  >> ./README.md
         shell: bash
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Commit files
+        run: |
+          git config --local user.name ${{ github.actor }}
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git add .
+          git commit -m "updating the repo automatically"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_ACCESS_TOKEN }}
+          force: true
       - run: echo "🍏 This job's status is ${{ job.status }}."
         env:
           APP_DEMO: ${{ secrets.APP_DEMO }}
