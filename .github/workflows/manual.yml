@@ -3,7 +3,7 @@ name: Run Cron
 on:
   workflow_dispatch:
   # push:
-  schedule:
+  # schedule:
     # - cron: "15 8,17 * * *"
     # - cron: '30 5 * * 2,4'
 
